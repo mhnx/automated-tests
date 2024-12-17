@@ -3,6 +3,7 @@ package dev.maia.math;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("Classe de testes")
 public class SimpleMathTest {
@@ -71,6 +72,32 @@ public class SimpleMathTest {
         Double expected = 2.0;
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void testDivision_When_FirstNumberIsDividedByZero_ShouldThrowArithmeticException() {
+        double firstNumber = 1.0;
+        double secondNumber = 0.0;
+
+        assertThrows(ArithmeticException.class, () -> {
+            simpleMath.divide(firstNumber, secondNumber);
+        });
+    }
+
+    @Test
+    void testDivisionByZeroV2() {
+        double firstNumber = 2D;
+        double secondNumber = 0D;
+
+        String expectedMessage = "Dividing by zero is impossíble!";
+
+        // assert do lançamento de exceção
+        ArithmeticException actual = assertThrows(ArithmeticException.class, () -> {
+           simpleMath.divide(firstNumber, secondNumber);
+        }, () -> "Dividing by zero should throw ArithmeticException");
+
+        // assert da mensagem de erro da exceção
+        assertEquals(expectedMessage, actual.getMessage());
     }
 
     @Test
