@@ -4,9 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,5 +61,15 @@ public class MockedListTest {
         when(list.get(anyInt())).thenThrow(new RuntimeException("error getting item list"));
 
         assertThrows(RuntimeException.class, () -> list.get(anyInt()), "Should have thrown a RuntimeException");
+    }
+
+    @Test
+    void testMockedListWithBDD() {
+
+        var list = mock(List.class);
+
+        given(list.size()).willReturn(1);
+
+        assertThat(list.size(), is(1));
     }
 }
