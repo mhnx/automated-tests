@@ -4,13 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-public class MockedListTest {
+public class MockedListBDDTest {
 
     @Test
     void testMockedListWhenSizeIsCalled() {
@@ -19,10 +20,10 @@ public class MockedListTest {
         List<?> list = mock(List.class);
 
         // When / Act
-        when(list.size()).thenReturn(10);
+        given(list.size()).willReturn(10);
 
         // Then / Assert
-        assertEquals(10, list.size());
+        assertThat(list.size(), is(10));
     }
 
     @Test
@@ -32,12 +33,12 @@ public class MockedListTest {
         List<?> list = mock(List.class);
 
         // When / Act
-        when(list.size()).thenReturn(10).thenReturn(20).thenReturn(30);
+        given(list.size()).willReturn(10).willReturn(20).willReturn(30);
 
         // Then / Assert
-        assertEquals(10, list.size());
-        assertEquals(20, list.size());
-        assertEquals(30, list.size());
+        assertThat(list.size(), is(10));
+        assertThat(list.size(), is(equalTo(20)));
+        assertThat(list.size(), equalTo(30));
     }
 
     @Test
@@ -45,9 +46,9 @@ public class MockedListTest {
 
         var list = mock(List.class);
 
-        when(list.get(anyInt())).thenReturn("Marco");
+        given(list.get(anyInt())).willReturn("Marco");
 
-        assertEquals("Marco", list.get(anyInt()));
+        assertThat(list.get(anyInt()), equalTo("Marco"));
     }
 
     @Test
@@ -55,7 +56,7 @@ public class MockedListTest {
 
         var list = mock(List.class);
 
-        when(list.get(anyInt())).thenThrow(new RuntimeException("error getting item list"));
+        given(list.get(anyInt())).willThrow(new RuntimeException("error getting item list"));
 
         assertThrows(RuntimeException.class, () -> list.get(anyInt()), "Should have thrown a RuntimeException");
     }
