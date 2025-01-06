@@ -5,12 +5,15 @@ import dev.main.service.CourseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 public class CourseBusinessMockTest {
@@ -64,5 +67,53 @@ public class CourseBusinessMockTest {
         verify(serviceMock, times(1)).deleteCourse("Kotlin para DEV's Java: Aprenda a Linguagem Padrão do Android");
         verify(serviceMock, atLeast(1)).deleteCourse("Kotlin para DEV's Java: Aprenda a Linguagem Padrão do Android");
         verify(serviceMock, atLeastOnce()).deleteCourse("Kotlin para DEV's Java: Aprenda a Linguagem Padrão do Android");
+
+        // usando then, should e never ao invés do verify
+        // porque? eu não sei ainda! kkkkk
+        then(serviceMock)
+                .should()
+                    .deleteCourse("Spotify Engineering Culture Desmistificado");
+
+        then(serviceMock)
+                .should(never())
+                    .deleteCourse("Microsserviços do 0 com Spring Cloud, Kotlin e Docker");
+
+        then(serviceMock)
+                .should(times(1))
+                    .deleteCourse("Kotlin para DEV's Java: Aprenda a Linguagem Padrão do Android");
+    }
+
+    @Test
+    @DisplayName("Should test using ArgumentCaptor")
+    void testDeleteCoursesWithArgumentCaptor() {
+        courses = List.of(
+                "Agile Desmistificado com Scrum, XP, Kanban e Trello",
+                "REST API's RESTFul do 0 à AWS com Spring Boot 3 Java e Docker"
+        );
+
+        var agileCourse = "Agile Desmistificado com Scrum, XP, Kanban e Trello";
+
+        given(serviceMock.retrieveCourses("Marco")).willReturn(courses);
+
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        business.deleteCoursesNotRelatedToSpring("Marco");
+
+        then(serviceMock).should().deleteCourse(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue(), is(agileCourse));
+    }
+
+    @Test
+    @DisplayName("Should test size using ArgumentCaptor")
+    void testDeleteCoursesWithArgumentCaptorAndAssertSize() {
+
+        given(serviceMock.retrieveCourses("Marco")).willReturn(courses);
+
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        business.deleteCoursesNotRelatedToSpring("Marco");
+
+        then(serviceMock).should(times(7)).deleteCourse(argumentCaptor.capture());
+        assertThat(argumentCaptor.getAllValues().size(), is(7));
     }
 }
