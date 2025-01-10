@@ -1,6 +1,6 @@
-package dev.main.business;
+package dev.maia.business;
 
-import dev.main.service.CourseService;
+import dev.maia.service.CourseService;
 
 import java.util.ArrayList;
 import java.util.List;

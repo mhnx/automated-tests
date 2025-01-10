@@ -1,7 +1,6 @@
 package dev.maia.business;
 
-import dev.main.business.CourseBusiness;
-import dev.main.service.CourseService;
+import dev.maia.service.CourseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

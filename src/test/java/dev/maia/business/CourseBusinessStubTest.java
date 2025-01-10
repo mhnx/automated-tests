@@ -1,8 +1,7 @@
 package dev.maia.business;
 
 import dev.maia.service.stubs.CourseServiceStub;
-import dev.main.business.CourseBusiness;
-import dev.main.service.CourseService;
+import dev.maia.service.CourseService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

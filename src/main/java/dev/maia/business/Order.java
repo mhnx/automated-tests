@@ -1,4 +1,4 @@
-package dev.main.business;
+package dev.maia.business;
 
 import java.time.LocalDateTime;
 

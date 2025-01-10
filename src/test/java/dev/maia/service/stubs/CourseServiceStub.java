@@ -1,6 +1,6 @@
 package dev.maia.service.stubs;
 
-import dev.main.service.CourseService;
+import dev.maia.service.CourseService;
 
 import java.util.List;
 

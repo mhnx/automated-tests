@@ -1,4 +1,4 @@
-package dev.main.service;
+package dev.maia.service;
 
 import java.util.List;
 

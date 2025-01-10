@@ -1,7 +1,7 @@
 package dev.maia.mockito;
 
-import dev.main.business.CourseBusiness;
-import dev.main.service.CourseService;
+import dev.maia.business.CourseBusiness;
+import dev.maia.service.CourseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

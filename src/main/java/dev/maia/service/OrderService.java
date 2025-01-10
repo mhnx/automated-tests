@@ -1,6 +1,6 @@
-package dev.main.service;
+package dev.maia.service;
 
-import dev.main.business.Order;
+import dev.maia.business.Order;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
